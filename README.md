@@ -13,7 +13,7 @@ This project grew out of my work as a Quantitative Analyst on a U.S. residential
 The short rate follows the Vasicek stochastic differential equation:
 
 $$
-dr(t) = \kappa(\theta - r(t))\,dt + \sigma\,dW(t)
+dr(t) = \kappa(\theta - r(t))\ dt + \sigma\ dW(t)
 $$
 
 The model is discretized with Euler-Maruyama:
