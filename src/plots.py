@@ -4,7 +4,7 @@ import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), ""))
 
 from rates import simulate_vasicek
-from pool_simulation import simulate_pool_balance
+from pool_simulation import calculate_wal, simulate_pool_balance
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
@@ -59,5 +59,21 @@ plt.grid()
 plt.tight_layout()
 
 output_path = os.path.join(output_dir, "pool_balance_plot.png")
+plt.savefig(output_path, dpi=200)
+print(f"Plot saved to: {output_path}")
+
+wal_per_path = calculate_wal(balance, time_grid)
+print(f"WAL media: {wal_per_path.mean():.2f} years")
+print(f"WAL 5° percentile: {np.percentile(wal_per_path, 5):.2f} years")
+print(f"WAL 95° percentile: {np.percentile(wal_per_path, 95):.2f} years")
+
+plt.figure(figsize=(8, 5))
+plt.hist(wal_per_path, bins=40)
+plt.xlabel("WAL (years)")
+plt.ylabel("Frequency")
+plt.title("Distribution of Weighted Average Life across 1000 Scenarios")
+plt.tight_layout()
+
+output_path = os.path.join(output_dir, "wal_distribution_plot.png")
 plt.savefig(output_path, dpi=200)
 print(f"Plot saved to: {output_path}")

@@ -28,3 +28,29 @@ def simulate_pool_balance(rate_paths, note_rate, cdr=0.01, a=60):
         balance[:, t] = balance[:, t - 1] * (1 - smm) * (1 - mdr)  # update balance
 
     return balance
+
+def calculate_wal(balance, time_grid):
+    """
+    balance: matrix (n_paths, n_steps+1), output of simulate_pool_balance
+    time_grid: array (n_steps+1,), in years
+
+    Returns:
+        wal_per_path: array (n_paths,), the WAL of each individual scenario
+    """
+    # 1. calculate the principal cash flow for each month and each path:
+    #    cashflow[:, t] = balance[:, t-1] - balance[:, t]
+    #    (suggestion: you can do this in one line without a loop, with slicing:
+    #     balance[:, :-1] - balance[:, 1:] )
+
+    # 2. the times corresponding to each cash flow are time_grid[1:]
+    #    (the cash flow at step t "belongs" to time t, not to time t-1)
+
+    # 3. for each path, calculate:
+    #    wal = sum(t * cashflow_t for each t) / sum(cashflow_t for each t)
+    #    (suggestion: with numpy, it's a element-wise multiplication
+    #     between cashflow and time_grid[1:], then .sum(axis=1), divided by cashflow.sum(axis=1))
+
+    cashflow = balance[:, :-1] - balance[:, 1:]
+    wal_per_path = np.sum(time_grid[1:] * cashflow, axis=1) / np.sum(cashflow, axis=1)
+
+    return wal_per_path
