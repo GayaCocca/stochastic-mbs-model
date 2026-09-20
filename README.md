@@ -28,7 +28,7 @@ $$
 Prepayment is represented by a Conditional Prepayment Rate (CPR) driven by the refinancing incentive:
 
 $$
-\text{incentive}(t) = \text{note_rate} - r(t)
+\text{incentive}(t) = \text{noteRate} - r(t)
 $$
 
 The incentive is mapped to CPR with a logistic function bounded by `CPR_min` and `CPR_max`. Annual CPR is converted to the monthly SMM convention:
