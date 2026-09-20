@@ -12,8 +12,8 @@ def simulate_vasicek(r0, kappa, theta, sigma, T, n_steps, n_paths):
     """
 
     dt = T/n_steps
-    time_grids = np.linspace((0, T, n_steps + 1)) #these are the time points
-    paths = np.zeros(n_paths, n_steps + 1) # different paths 
+    time_grids = np.linspace(0, T, n_steps + 1) #these are the time points
+    paths = np.zeros((n_paths, n_steps + 1)) # different paths 
     paths[:, 0] = r0 #every path starts with the initial interest rate
   
     for t in range (1, n_steps + 1):
