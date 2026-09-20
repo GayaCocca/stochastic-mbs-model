@@ -32,4 +32,9 @@ if __name__ == "__main__":
     print(paths.shape)   
     print(paths[:5, :5]) 
 
+
+
+
+
+
     
